@@ -31,7 +31,6 @@ app.use(express.static(path.resolve(__dirname, 'static')))
  */
 const start = async () =>{
     try{
-       
         app.listen(PORT, () => console.log('start on: '+ PORT))
     } catch(e) {
         console.log(e)
