@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const path = require('path')
+const connect = require('./db');
 //const router = require('./routes/index.js')
 const fileUpload = require('express-fileupload')
 
@@ -31,6 +32,8 @@ app.use(express.static(path.resolve(__dirname, 'static')))
  */
 const start = async () =>{
     try{
+        await connect.authenticate()
+        await connect.sync()
         app.listen(PORT, () => console.log('start on: '+ PORT))
     } catch(e) {
         console.log(e)
