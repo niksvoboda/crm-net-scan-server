@@ -12,11 +12,10 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const router = require('./routes/index.js');
-const mongoose = require('mongoose');
+const connect = require('./db');
+//const router = require('./routes/index.js')
 const fileUpload = require('express-fileupload');
 const PORT = process.env.PORT;
-const mongoUri = process.env.MONGODB_URI;
 const app = express();
 /**
  * @description  Настраиваем CORS, разрешаем обращения с фронтенда, работа которого предполагается на порту 3000
@@ -33,13 +32,15 @@ app.use(fileUpload({}));
 /** Указываем папку для статических файлов */
 app.use(express.static(path.resolve(__dirname, 'static')));
 /** Подключаем роутер API */
-app.use('/api', router);
+//app.use('/api', router)
 /** Подключаем модуль для загрузки статических файлов */
 /**
  * @description Запускаем сервер и подключаемся к базе данных
  */
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        yield connect.authenticate();
+        //await connect.sync()
         app.listen(PORT, () => console.log('start on: ' + PORT));
     }
     catch (e) {
